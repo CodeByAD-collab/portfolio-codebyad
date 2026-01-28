@@ -3,187 +3,213 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amine | Full Stack Developer - CodeByAd</title>
+    <title>Amine | CodeByAd - Full Stack Engineer</title>
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <style>
-        :root { --bg: #050505; --accent: #ffffff; --zinc-deep: #09090b; --zinc-border: #27272a; }
+        :root { --bg: #000000; --card: #0a0a0b; --border: #1a1a1b; --accent: #3b82f6; }
         body { background: var(--bg); color: #fff; font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
 
-        /* Modern Background */
-        .mesh-bg { position: fixed; inset: 0; z-index: -2; background: radial-gradient(circle at 50% 50%, #1d4ed81a 0%, #000 100%); }
-        .noise { position: fixed; inset: 0; z-index: -1; opacity: 0.03; pointer-events: none; background-image: url('https://grainy-gradients.vercel.app/noise.svg'); }
+        /* Modern Mesh Background */
+        .mesh-container {
+            position: fixed; inset: 0; z-index: -2; overflow: hidden;
+            background: radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                        radial-gradient(circle at 90% 80%, rgba(147, 51, 234, 0.08) 0%, transparent 50%);
+        }
+        .noise-overlay {
+            position: fixed; inset: 0; z-index: -1; opacity: 0.04; pointer-events: none;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
 
-        /* Infinite Marquee */
-        .marquee { display: flex; overflow: hidden; white-space: nowrap; border-top: 1px solid var(--zinc-border); border-bottom: 1px solid var(--zinc-border); padding: 20px 0; }
-        .marquee-content { display: flex; animation: scroll 20s linear infinite; }
-        .marquee-item { font-size: 1.5rem; font-weight: 700; margin: 0 40px; color: #52525b; text-transform: uppercase; letter-spacing: 0.1em; }
-        @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+        /* Mobile Typography */
+        .h-large { font-size: clamp(3rem, 18vw, 12rem); line-height: 0.85; letter-spacing: -0.05em; font-weight: 700; }
+        
+        /* Premium Bento Cards */
+        .glass-bento {
+            background: linear-gradient(145deg, #0f0f10 0%, #050505 100%);
+            border: 1px solid var(--border);
+            border-radius: 2.5rem;
+            padding: 2rem;
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+        }
+        .glass-bento:active { transform: scale(0.98); border-color: #333; }
 
-        /* Bento Grid Details */
-        .bento-card { background: var(--zinc-deep); border: 1px solid var(--zinc-border); border-radius: 2rem; padding: 2.5rem; transition: 0.4s; }
-        .bento-card:hover { border-color: #fff; transform: translateY(-5px); }
-
-        .text-huge { font-size: clamp(3.5rem, 12vw, 10rem); line-height: 0.85; letter-spacing: -0.04em; }
+        /* Hide Scrollbar */
         ::-webkit-scrollbar { display: none; }
+
+        /* Nav Pilling */
+        .nav-pill {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(15px);
+            border: 1px solid var(--border); padding: 8px; border-radius: 100px;
+            display: flex; gap: 5px; z-index: 1000;
+        }
+        .nav-item { padding: 10px 20px; border-radius: 100px; font-size: 0.85rem; font-weight: 500; }
+        .nav-item.active { background: #fff; color: #000; }
     </style>
 </head>
 <body>
 
-    <div class="mesh-bg"></div>
-    <div class="noise"></div>
+    <div class="mesh-container"></div>
+    <div class="noise-overlay"></div>
 
-    <!-- HEADER -->
-    <nav class="fixed top-0 w-full p-6 md:p-10 flex justify-between items-center z-50 mix-blend-difference">
-        <span class="font-bold tracking-tighter text-2xl">CODEBYAD</span>
-        <a href="https://wa.me/212713305570" class="bg-white text-black px-6 py-2 rounded-full font-bold text-sm">HIRE ME</a>
-    </nav>
+    <!-- BOTTOM NAV (Native App Feel) -->
+    <div class="nav-pill">
+        <a href="#" class="nav-item active">Home</a>
+        <a href="#projects" class="nav-item text-zinc-500">Works</a>
+        <a href="https://wa.me/212713305570" class="nav-item text-zinc-500">Contact</a>
+    </div>
 
-    <main>
-        <!-- HERO -->
-        <section class="min-h-screen flex flex-col justify-center px-6 md:px-12 pt-20">
-            <h1 class="text-huge font-bold mb-6" id="hero-title">FULL STACK<br><span class="text-zinc-800">ENGINEER.</span></h1>
-            <p class="text-zinc-400 text-lg md:text-2xl max-w-2xl leading-relaxed" id="hero-desc">
-                I am Amine, specializing in architecting <span class="text-white">enterprise-grade booking systems</span> and full-scale digital solutions that scale revenue.
+    <!-- MAIN CONTENT -->
+    <main class="px-5 pb-32">
+        
+        <!-- HERO (Mobile Optimized) -->
+        <section class="min-h-[85vh] flex flex-col justify-center pt-10">
+            <div class="flex items-center gap-2 mb-6">
+                <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+                <p class="text-zinc-500 uppercase text-[10px] tracking-widest font-bold">Open for high-ticket projects</p>
+            </div>
+            <h1 class="h-large mb-8 animate-title">AMINE<br>CODEBYAD</h1>
+            <p class="text-zinc-400 text-lg leading-snug max-w-sm animate-desc">
+                Building custom <span class="text-white">Full Stack Systems</span> that automate your business and scale your revenue.
             </p>
         </section>
 
-        <!-- TECH MARQUEE (The "Expertise" proof) -->
-        <div class="marquee mb-20">
-            <div class="marquee-content">
-                <span class="marquee-item">HTML5</span><span class="marquee-item">CSS3 (Tailwind)</span>
-                <span class="marquee-item">React.js</span><span class="marquee-item">Next.js</span>
-                <span class="marquee-item">Node.js</span><span class="marquee-item">Express</span>
-                <span class="marquee-item">PostgreSQL</span><span class="marquee-item">MongoDB</span>
-                <span class="marquee-item">Python</span><span class="marquee-item">REST APIs</span>
-                <!-- Duplicate for seamless loop -->
-                <span class="marquee-item">HTML5</span><span class="marquee-item">CSS3 (Tailwind)</span>
-                <span class="marquee-item">React.js</span><span class="marquee-item">Next.js</span>
-                <span class="marquee-item">Node.js</span><span class="marquee-item">Express</span>
-                <span class="marquee-item">PostgreSQL</span><span class="marquee-item">MongoDB</span>
-                <span class="marquee-item">Python</span><span class="marquee-item">REST APIs</span>
+        <!-- TECH STACK (Grid of Expertise) -->
+        <section class="py-10">
+            <h2 class="text-xs uppercase text-zinc-600 font-bold tracking-widest mb-6">Mastered Stack</h2>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-[#0f0f10] border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between h-32">
+                    <span class="text-xs text-zinc-500">Frontend</span>
+                    <span class="font-bold">React / Next.js<br>Tailwind CSS</span>
+                </div>
+                <div class="bg-[#0f0f10] border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between h-32">
+                    <span class="text-xs text-zinc-500">Backend</span>
+                    <span class="font-bold">Node.js / Express<br>Python / API</span>
+                </div>
+                <div class="bg-[#0f0f10] border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between h-32">
+                    <span class="text-xs text-zinc-500">Database</span>
+                    <span class="font-bold">PostgreSQL<br>MongoDB / Redis</span>
+                </div>
+                <div class="bg-[#0f0f10] border border-zinc-900 p-4 rounded-2xl flex flex-col justify-between h-32">
+                    <span class="text-xs text-zinc-500">Booking</span>
+                    <span class="font-bold">Custom Logic<br>Automation</span>
+                </div>
             </div>
-        </div>
+        </section>
 
-        <!-- DETAILED SERVICES -->
-        <section class="px-6 md:px-12 py-20">
-            <h2 class="text-3xl font-bold mb-12">Digital Solutions Breakdown</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                
-                <div class="bento-card">
-                    <div class="text-blue-500 mb-6 font-bold text-xl">01 / FRONTEND MASTERY</div>
-                    <h3 class="text-3xl font-bold mb-4">Responsive Interfaces</h3>
-                    <p class="text-zinc-400 mb-6">Pixel-perfect development using React and Next.js. I focus on high-performance Core Web Vitals and fluid user interactions using GSAP.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">React</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">Tailwind</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">Framer Motion</span>
+        <!-- SERVICES BENTO -->
+        <section class="py-10 space-y-4">
+            <h2 class="text-xs uppercase text-zinc-600 font-bold tracking-widest mb-6">Specialized Solutions</h2>
+            
+            <div class="glass-bento stagger-reveal">
+                <div class="text-blue-500 text-2xl mb-4">✦</div>
+                <h3 class="text-2xl font-bold mb-2">SaaS & Booking Engines</h3>
+                <p class="text-zinc-500 text-sm leading-relaxed">I architect complex reservation systems for the beauty and wellness industry, integrating Stripe and real-time scheduling.</p>
+            </div>
+
+            <div class="glass-bento stagger-reveal">
+                <div class="text-purple-500 text-2xl mb-4">✦</div>
+                <h3 class="text-2xl font-bold mb-2">High-Performance Web</h3>
+                <p class="text-zinc-500 text-sm leading-relaxed">Websites that load in milliseconds. Optimized for SEO and designed to convert visitors into high-paying clients.</p>
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section id="projects" class="py-10">
+            <h2 class="text-xs uppercase text-zinc-600 font-bold tracking-widest mb-10">Featured Case Studies</h2>
+            <div class="space-y-12">
+                <!-- Case Study 1 -->
+                <div class="group stagger-reveal">
+                    <div class="mb-6 overflow-hidden rounded-[2rem] h-[50vh] bg-zinc-900 flex items-center justify-center">
+                        <span class="text-zinc-800 font-bold text-4xl">TOMESPA</span>
+                    </div>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <h4 class="text-4xl font-bold mb-2 tracking-tighter">TomeSpa</h4>
+                            <p class="text-zinc-500 text-sm">Full System & Website Dev</p>
+                        </div>
+                        <a href="https://tomespa.com" target="_blank" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition">↗</a>
                     </div>
                 </div>
 
-                <div class="bento-card">
-                    <div class="text-green-500 mb-6 font-bold text-xl">02 / BACKEND & DATABASE</div>
-                    <h3 class="text-3xl font-bold mb-4">Robust Infrastructure</h3>
-                    <p class="text-zinc-400 mb-6">Architecting secure server-side logic and database schemas. Specialized in real-time booking engines and secure payment gateways.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">Node.js</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">PostgreSQL</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">MongoDB</span>
+                <!-- Case Study 2 -->
+                <div class="group stagger-reveal">
+                    <div class="mb-6 overflow-hidden rounded-[2rem] h-[50vh] bg-zinc-900 flex items-center justify-center">
+                        <span class="text-zinc-800 font-bold text-4xl">BECOLOR</span>
                     </div>
-                </div>
-
-                <div class="bento-card md:col-span-2">
-                    <div class="text-purple-500 mb-6 font-bold text-xl">03 / SPECIALIZED SYSTEMS</div>
-                    <h3 class="text-3xl font-bold mb-4">Intelligent Booking & CRM</h3>
-                    <p class="text-zinc-400 mb-6">Complete automation for Beauty, Wellness, and Fitness industries. Automated notifications, staff management, and client analytics dashboards.</p>
-                    <div class="flex flex-wrap gap-2">
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">API Integration</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">Stripe</span>
-                        <span class="bg-zinc-800 px-3 py-1 rounded text-xs uppercase">Automations</span>
+                    <div class="flex justify-between items-end">
+                        <div>
+                            <h4 class="text-4xl font-bold mb-2 tracking-tighter">BeColor</h4>
+                            <p class="text-zinc-500 text-sm">Luxury Booking System</p>
+                        </div>
+                        <a href="https://becolor-rabat.com" target="_blank" class="w-12 h-12 rounded-full border border-zinc-800 flex items-center justify-center hover:bg-white hover:text-black transition">↗</a>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PORTFOLIO -->
-        <section class="px-6 md:px-12 py-20 bg-white text-black rounded-[3rem]">
-            <h2 class="text-zinc-400 uppercase text-xs tracking-widest mb-10">Featured Case Studies</h2>
-            
-            <div class="space-y-20">
-                <div class="flex flex-col md:flex-row justify-between items-start gap-10">
-                    <div class="max-w-xl">
-                        <h4 class="text-6xl font-bold tracking-tighter mb-4">TomeSpa</h4>
-                        <p class="text-zinc-600 mb-6">A high-end wellness platform featuring a custom-built service menu and lead generation funnel for a premium Rabat spa.</p>
-                        <a href="https://tomespa.com" class="font-bold border-b-2 border-black">View Project ↗</a>
-                    </div>
-                    <div class="bg-zinc-100 p-8 rounded-2xl w-full md:w-auto">
-                        <span class="text-xs uppercase font-bold text-zinc-400">Stack:</span>
-                        <p class="font-medium">React / Node.js / PostgreSQL</p>
-                    </div>
-                </div>
-
-                <div class="flex flex-col md:flex-row justify-between items-start gap-10">
-                    <div class="max-w-xl">
-                        <h4 class="text-6xl font-bold tracking-tighter mb-4">BeColor</h4>
-                        <p class="text-zinc-600 mb-6">Revolutionizing appointment management for a luxury hair studio. Reduced booking friction by 60% through custom UI/UX.</p>
-                        <a href="https://becolor-rabat.com" class="font-bold border-b-2 border-black">View Project ↗</a>
-                    </div>
-                    <div class="bg-zinc-100 p-8 rounded-2xl w-full md:w-auto">
-                        <span class="text-xs uppercase font-bold text-zinc-400">Stack:</span>
-                        <p class="font-medium">Next.js / MongoDB / Tailwind</p>
-                    </div>
-                </div>
+        <!-- CTA -->
+        <section class="py-32 text-center">
+            <h2 class="h-large mb-12">LET'S<br>SCALE.</h2>
+            <a href="https://wa.me/212713305570" class="block w-full bg-white text-black py-6 rounded-3xl font-bold text-xl active:scale-95 transition-transform">
+                Start WhatsApp Chat
+            </a>
+            <div class="mt-10 text-zinc-600 text-xs tracking-widest flex flex-col gap-4">
+                <span>AMINEDKYAR@GMAIL.COM</span>
+                <span>BASED IN MOROCCO • WORLDWIDE SERVICE</span>
             </div>
         </section>
-
-        <!-- FOOTER / CONTACT -->
-        <footer class="py-40 px-6 text-center">
-            <p class="text-zinc-500 mb-8 uppercase tracking-widest text-sm">Ready to scale your business?</p>
-            <a href="https://wa.me/212713305570" class="text-[12vw] font-bold tracking-tighter hover:text-zinc-700 transition">LET'S BUILD</a>
-            
-            <div class="mt-20 flex flex-wrap justify-center gap-10 text-zinc-400">
-                <a href="mailto:aminedkyar@gmail.com" class="hover:text-white transition">Email</a>
-                <a href="https://instagram.com/codebyad_" class="hover:text-white transition">Instagram</a>
-                <a href="https://wa.me/212713305570" class="hover:text-white transition">WhatsApp</a>
-            </div>
-        </footer>
     </main>
 
     <script>
+        // Smooth Scroll
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
+        // GSAP Revelations
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Reveal
-        gsap.from("#hero-title", { y: 100, opacity: 0, duration: 1.5, ease: "power4.out" });
-        gsap.from("#hero-desc", { y: 50, opacity: 0, duration: 1, delay: 0.5 });
+        // Hero Stagger
+        const tl = gsap.timeline();
+        tl.from(".animate-title", { y: 100, opacity: 0, duration: 1, ease: "power4.out" })
+          .from(".animate-desc", { y: 20, opacity: 0, duration: 0.8 }, "-=0.6");
 
-        // Bento Cards reveal
-        document.querySelectorAll('.bento-card').forEach(card => {
-            gsap.from(card, {
-                scrollTrigger: { trigger: card, start: "top 90%" },
-                opacity: 0, y: 50, duration: 1, ease: "power3.out"
+        // Reveal on scroll
+        const reveals = document.querySelectorAll('.stagger-reveal');
+        reveals.forEach(el => {
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 90%",
+                },
+                y: 40,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
             });
         });
 
-        // Portfolio Section Color Switch
-        gsap.to("body", {
-            scrollTrigger: {
-                trigger: ".bg-white",
-                start: "top center",
-                end: "bottom center",
-                toggleActions: "play reverse play reverse"
-            },
-            backgroundColor: "#fff",
-            color: "#000",
-            duration: 0.5
+        // Bottom Nav Active Logic
+        window.addEventListener('scroll', () => {
+            const navItems = document.querySelectorAll('.nav-item');
+            if (window.scrollY > 500) {
+                navItems[0].classList.remove('active');
+                navItems[0].classList.add('text-zinc-500');
+                navItems[1].classList.add('active');
+                navItems[1].classList.remove('text-zinc-500');
+            } else {
+                navItems[1].classList.remove('active');
+                navItems[1].classList.add('text-zinc-500');
+                navItems[0].classList.add('active');
+                navItems[0].classList.remove('text-zinc-500');
+            }
         });
     </script>
 </body>
