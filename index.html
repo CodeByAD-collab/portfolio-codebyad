@@ -3,225 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amine | CodeByAd - Full Stack Developer</title>
+    <title>Amine | CodeByAd</title>
     
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
-    
-    <!-- CDNs -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <style>
-        :root { --bg: #000000; --accent: #ffffff; --zinc: #09090b; --border: #27272a; }
-        
-        body { background: var(--bg); color: var(--accent); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
+        :root { --bg: #0a0a0a; --text: #f4f4f5; }
+        body { background: var(--bg); color: var(--text); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
 
-        /* Smooth Scroll */
+        /* MESH BACKGROUND */
+        .mesh-bg {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -2; background: var(--bg);
+            filter: blur(100px); opacity: 0.5;
+        }
+        .blob {
+            position: absolute; width: 50vw; height: 50vw;
+            background: linear-gradient(135deg, #3b82f6 0%, #9333ea 100%);
+            border-radius: 50%; z-index: -1;
+        }
+
+        /* NOISE TEXTURE overlay */
+        .noise {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; pointer-events: none; opacity: 0.05;
+            background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+        }
+
+        /* CUSTOM UTILS */
+        .text-huge { font-size: clamp(3rem, 15vw, 12rem); line-height: 0.85; font-weight: 700; letter-spacing: -0.05em; }
+        .glass-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
+        
+        /* Smooth Scroll Setup */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
-
-        /* HEADER EYES */
-        .eye-header {
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
-            z-index: 1000; display: flex; justify-content: center; align-items: center;
-            border-bottom: 1px solid var(--border);
-        }
-        .eye { width: 45px; height: 28px; background: white; border-radius: 50%; margin: 0 10px; position: relative; overflow: hidden; }
-        .pupil { width: 18px; height: 18px; background: black; border-radius: 50%; position: absolute; top: 15%; left: 30%; }
-
-        /* BENTO GRID */
-        .bento-card {
-            background: var(--zinc);
-            border: 1px solid var(--border);
-            border-radius: 32px;
-            padding: 2.5rem;
-            opacity: 0;
-            transform: translateY(30px);
-            transition: border-color 0.3s ease;
-        }
-        .bento-card:hover { border-color: white; }
-
-        /* PROJECT LIST */
-        .project-row {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 2.5rem 0; border-bottom: 1px solid var(--border);
-            transition: all 0.4s ease;
-        }
-        .project-row:hover { padding-left: 15px; padding-right: 15px; background: #09090b; }
-
-        /* ANIMATIONS */
-        .reveal-text { overflow: hidden; display: inline-block; vertical-align: bottom; }
-        .reveal-text span { display: inline-block; transform: translateY(100%); }
-
-        /* Hide Scrollbar */
         ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- THE PERSISTENT WATCHER -->
-    <nav class="eye-header">
-        <div class="eye"><div class="pupil"></div></div>
-        <div class="eye"><div class="pupil"></div></div>
+    <div class="mesh-bg">
+        <div class="blob" id="blob1"></div>
+        <div class="blob" id="blob2" style="background: #10b981; right: 0; top: 20%;"></div>
+    </div>
+    <div class="noise"></div>
+
+    <!-- NAV -->
+    <nav class="fixed top-0 w-full p-6 flex justify-between items-center z-50">
+        <span class="font-bold tracking-tighter text-xl">AMINE</span>
+        <a href="https://wa.me/212713305570" class="glass-card px-5 py-2 rounded-full text-sm font-medium hover:bg-white hover:text-black transition">Let's Talk</a>
     </nav>
 
-    <main class="pt-32 px-5 md:px-20 max-w-7xl mx-auto">
-        
-        <!-- HERO SECTION (Mobile First) -->
-        <section class="min-h-[70vh] flex flex-col justify-center mb-20">
-            <p class="text-zinc-500 uppercase tracking-widest text-xs mb-6 stagger-hero">Full Stack Developer & Digital Strategist</p>
-            <h1 class="text-[14vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter mb-8 stagger-hero">
-                AMINE <br> <span class="text-zinc-800">CODEBYAD</span>
-            </h1>
-            <p class="text-zinc-400 text-lg md:text-2xl max-w-xl mb-10 leading-relaxed stagger-hero">
-                Specializing in <span class="text-white">intelligent booking systems</span> and high-performance digital solutions for beauty & wellness.
+    <main>
+        <!-- HERO -->
+        <section class="h-screen flex flex-col justify-center px-6 md:px-12">
+            <div class="overflow-hidden">
+                <h1 class="text-huge hero-title">DIGITAL</h1>
+            </div>
+            <div class="overflow-hidden">
+                <h1 class="text-huge hero-title text-zinc-700">SOLUTIONS</h1>
+            </div>
+            <p class="mt-8 text-zinc-400 text-lg md:text-2xl max-w-xl hero-p">
+                Amine / Full Stack Developer. <br>
+                Building intelligent booking systems and premium web experiences.
             </p>
-            <div class="stagger-hero">
-                <a href="https://wa.me/212713305570" class="inline-block bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform active:scale-95">
-                    Start a Project
-                </a>
+        </section>
+
+        <!-- HORIZONTAL PROJECTS (Modern standard) -->
+        <section class="py-20 overflow-hidden" id="projects-section">
+            <h2 class="px-6 md:px-12 text-zinc-500 uppercase text-xs tracking-[0.3em] mb-10">Selected Works</h2>
+            
+            <div class="flex gap-10 px-6 md:px-12" id="project-slider">
+                <!-- Card 1 -->
+                <div class="min-w-[85vw] md:min-w-[40vw] glass-card p-10 rounded-[2rem] h-[50vh] flex flex-col justify-between group cursor-pointer">
+                    <span class="text-zinc-500">01 / Wellness</span>
+                    <div>
+                        <h3 class="text-4xl md:text-6xl font-bold mb-4">TomeSpa</h3>
+                        <a href="https://tomespa.com" class="text-white border-b border-white pb-1 opacity-0 group-hover:opacity-100 transition">Live Site ↗</a>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="min-w-[85vw] md:min-w-[40vw] glass-card p-10 rounded-[2rem] h-[50vh] flex flex-col justify-between group">
+                    <span class="text-zinc-500">02 / Beauty</span>
+                    <div>
+                        <h3 class="text-4xl md:text-6xl font-bold mb-4">BeColor</h3>
+                        <a href="https://becolor-rabat.com" class="text-white border-b border-white pb-1 opacity-0 group-hover:opacity-100 transition">Live Site ↗</a>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="min-w-[85vw] md:min-w-[40vw] glass-card p-10 rounded-[2rem] h-[50vh] flex flex-col justify-between group">
+                    <span class="text-zinc-500">03 / Fitness</span>
+                    <div>
+                        <h3 class="text-4xl md:text-6xl font-bold mb-4">Forma Pilates</h3>
+                        <p class="text-zinc-500">System Integration</p>
+                    </div>
+                </div>
             </div>
         </section>
 
-        <!-- SPECIALTIES (Bento Grid) -->
-        <section class="py-20">
-            <h2 class="text-3xl font-bold mb-10 tracking-tight">Core Expertise</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Bento 1 -->
-                <div class="bento-card md:col-span-2">
-                    <span class="text-4xl mb-6 block">🌐</span>
-                    <h3 class="text-2xl font-bold mb-3">Custom Web Dev</h3>
-                    <p class="text-zinc-500">I build fast, responsive, and SEO-optimized platforms using Next.js and modern stacks.</p>
+        <!-- SERVICES BENTO -->
+        <section class="px-6 md:px-12 py-32">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="md:col-span-2 glass-card p-12 rounded-[2.5rem]">
+                    <h4 class="text-3xl font-bold mb-4">Custom Systems</h4>
+                    <p class="text-zinc-400">Specialized in automated booking engines that handle the heavy lifting for your business.</p>
                 </div>
-                <!-- Bento 2 -->
-                <div class="bento-card">
-                    <span class="text-4xl mb-6 block">📅</span>
-                    <h3 class="text-2xl font-bold mb-3">Booking</h3>
-                    <p class="text-zinc-500">Intelligent reservation systems for salons and spas.</p>
+                <div class="glass-card p-12 rounded-[2.5rem]">
+                    <h4 class="text-xl font-bold mb-2">SEO</h4>
+                    <p class="text-zinc-500 text-sm">Visibility focused dev.</p>
                 </div>
-                <!-- Bento 3 -->
-                <div class="bento-card">
-                    <span class="text-4xl mb-6 block">🔍</span>
-                    <h3 class="text-2xl font-bold mb-3">SEO</h3>
-                    <p class="text-zinc-500">Optimizing for growth and visibility.</p>
-                </div>
-                <!-- Bento 4 -->
-                <div class="bento-card md:col-span-2 bg-zinc-100 text-black">
-                    <span class="text-4xl mb-6 block">⚡</span>
-                    <h3 class="text-2xl font-bold mb-3">Performance</h3>
-                    <p class="text-zinc-700 font-medium">Clean, maintainable code that grows with your business.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- WORKS -->
-        <section class="py-20">
-            <h2 class="text-zinc-500 uppercase tracking-widest text-xs mb-10">Featured Work</h2>
-            <div class="flex flex-col border-t border-zinc-800">
-                <a href="https://tomespa.com" class="project-row group">
-                    <h3 class="text-4xl md:text-7xl font-bold group-hover:text-zinc-500">TomeSpa</h3>
-                    <div class="text-right">
-                        <p class="text-xs uppercase text-zinc-600">Wellness</p>
-                        <p class="text-xl">Visit site ↗</p>
-                    </div>
-                </a>
-                <a href="https://becolor-rabat.com" class="project-row group">
-                    <h3 class="text-4xl md:text-7xl font-bold group-hover:text-zinc-500">BeColor</h3>
-                    <div class="text-right">
-                        <p class="text-xs uppercase text-zinc-600">Beauty</p>
-                        <p class="text-xl">Visit site ↗</p>
-                    </div>
-                </a>
-                <div class="project-row opacity-30">
-                    <h3 class="text-4xl md:text-7xl font-bold">Forma Pilates</h3>
-                    <p class="text-zinc-600">Developing...</p>
+                <div class="glass-card p-12 rounded-[2.5rem]">
+                    <h4 class="text-xl font-bold mb-2">Modern Stack</h4>
+                    <p class="text-zinc-500 text-sm">Next.js / GSAP / TailWind</p>
                 </div>
             </div>
         </section>
 
         <!-- CONTACT -->
-        <footer class="py-40 text-center">
-            <h2 class="text-6xl md:text-[10vw] font-bold tracking-tighter mb-10">GET IN TOUCH.</h2>
-            <div class="flex flex-wrap justify-center gap-10 text-xl md:text-3xl font-medium">
-                <a href="https://wa.me/212713305570" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">WhatsApp</a>
-                <a href="mailto:aminedkyar@gmail.com" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">Email</a>
-                <a href="https://instagram.com/codebyad_" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">Instagram</a>
+        <footer class="h-screen flex flex-col justify-center items-center px-6 text-center">
+            <h2 class="text-huge tracking-tighter mb-12">CONNECT</h2>
+            <div class="flex flex-wrap justify-center gap-8">
+                <a href="https://wa.me/212713305570" class="text-2xl md:text-4xl font-bold hover:text-blue-500 transition">WhatsApp</a>
+                <a href="mailto:aminedkyar@gmail.com" class="text-2xl md:text-4xl font-bold hover:text-purple-500 transition">Email</a>
             </div>
-            <p class="mt-32 text-zinc-600 text-sm">© 2025 CODEBYAD. ALL RIGHTS RESERVED.</p>
+            <p class="mt-20 text-zinc-600 uppercase tracking-widest text-xs">Based in Morocco • Available Globally</p>
         </footer>
-
     </main>
 
     <script>
-        // 1. Initialize Lenis (Smooth Scrolling)
+        // 1. Smooth Scroll (Lenis)
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // 2. EYE TRACKING LOGIC
-        window.addEventListener('mousemove', (e) => {
-            const pupils = document.querySelectorAll('.pupil');
-            pupils.forEach(pupil => {
-                const rect = pupil.parentElement.getBoundingClientRect();
-                const eyeX = rect.left + rect.width / 2;
-                const eyeY = rect.top + rect.height / 2;
-                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
-                const distance = 8;
-                const x = Math.cos(angle) * distance;
-                const y = Math.sin(angle) * distance;
-                gsap.to(pupil, { x, y, duration: 0.1 });
-            });
+        // 2. Background Blob Animation
+        gsap.to("#blob1", {
+            x: '30vw', y: '20vh', duration: 10, repeat: -1, yoyo: true, ease: "sine.inOut"
+        });
+        gsap.to("#blob2", {
+            x: '-20vw', y: '40vh', duration: 15, repeat: -1, yoyo: true, ease: "sine.inOut"
         });
 
-        // Mobile Scroll Eye Tracking (Eyes look down as you scroll)
-        window.addEventListener('scroll', () => {
-            if (window.innerWidth < 768) {
-                const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-                gsap.to(".pupil", { y: scrollPercent * 15, duration: 0.2 });
-            }
-        });
+        // 3. Hero Entrance
+        const tl = gsap.timeline();
+        tl.from(".hero-title", {
+            y: 200, skewY: 10, duration: 1.5, stagger: 0.2, ease: "power4.out"
+        })
+        .from(".hero-p", {
+            opacity: 0, y: 20, duration: 1
+        }, "-=1");
 
-        // 3. GSAP ANIMATIONS
+        // 4. Horizontal Scroll (Desktop Only)
         gsap.registerPlugin(ScrollTrigger);
-
-        // Hero Entrance
-        gsap.from(".stagger-hero", {
-            y: 50,
-            opacity: 0,
-            duration: 1,
-            stagger: 0.2,
-            ease: "power4.out",
-            delay: 0.5
-        });
-
-        // Bento Cards Reveal
-        gsap.to(".bento-card", {
-            scrollTrigger: {
-                trigger: ".bento-card",
-                start: "top 85%"
-            },
-            opacity: 1,
-            y: 0,
-            duration: 1,
-            stagger: 0.15,
-            ease: "power3.out"
-        });
-
-        // Project Rows Reveal
-        const rows = document.querySelectorAll('.project-row');
-        rows.forEach(row => {
-            gsap.from(row, {
+        
+        if (window.innerWidth > 768) {
+            const slider = document.getElementById('project-slider');
+            gsap.to(slider, {
+                x: () => -(slider.scrollWidth - window.innerWidth + 100),
+                ease: "none",
                 scrollTrigger: {
-                    trigger: row,
-                    start: "top 95%"
-                },
-                opacity: 0,
-                x: -30,
-                duration: 0.8
+                    trigger: "#projects-section",
+                    start: "top top",
+                    end: () => "+=" + slider.scrollWidth,
+                    scrub: 1,
+                    pin: true,
+                    anticipatePin: 1
+                }
+            });
+        }
+
+        // 5. Card Hover Reveal
+        document.querySelectorAll('.glass-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: { trigger: card, start: "top 90%" },
+                opacity: 0, scale: 0.95, y: 30, duration: 1, ease: "power3.out"
             });
         });
     </script>
