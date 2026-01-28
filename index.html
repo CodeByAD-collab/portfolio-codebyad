@@ -15,116 +15,214 @@
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 
     <style>
-        :root { --bg: #000000; --accent: #ffffff; }
+        :root { --bg: #000000; --accent: #ffffff; --zinc: #09090b; --border: #27272a; }
+        
         body { background: var(--bg); color: var(--accent); font-family: 'Space Grotesk', sans-serif; overflow-x: hidden; }
-        
-        /* Eye Watcher Style */
-        .watcher-bar {
-            position: fixed; top: 0; left: 0; width: 100%; height: 60px;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(10px);
-            z-index: 1000; display: flex; justify-content: center; align-items: center;
-            border-bottom: 1px solid #27272a;
-        }
-        .eye { width: 35px; height: 22px; background: white; border-radius: 50%; margin: 0 5px; position: relative; overflow: hidden; }
-        .pupil { width: 14px; height: 14px; background: black; border-radius: 50%; position: absolute; top: 15%; left: 30%; }
-        
+
         /* Smooth Scroll */
         html.lenis { height: auto; }
         .lenis.lenis-smooth { scroll-behavior: auto !important; }
-        
-        .bento-card { background: #09090b; border: 1px solid #27272a; border-radius: 24px; padding: 2rem; }
-        .project-link:hover h3 { color: #71717a; transform: translateX(10px); transition: all 0.3s ease; }
+
+        /* HEADER EYES */
+        .eye-header {
+            position: fixed; top: 0; left: 0; width: 100%; height: 80px;
+            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px);
+            z-index: 1000; display: flex; justify-content: center; align-items: center;
+            border-bottom: 1px solid var(--border);
+        }
+        .eye { width: 45px; height: 28px; background: white; border-radius: 50%; margin: 0 10px; position: relative; overflow: hidden; }
+        .pupil { width: 18px; height: 18px; background: black; border-radius: 50%; position: absolute; top: 15%; left: 30%; }
+
+        /* BENTO GRID */
+        .bento-card {
+            background: var(--zinc);
+            border: 1px solid var(--border);
+            border-radius: 32px;
+            padding: 2.5rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: border-color 0.3s ease;
+        }
+        .bento-card:hover { border-color: white; }
+
+        /* PROJECT LIST */
+        .project-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 2.5rem 0; border-bottom: 1px solid var(--border);
+            transition: all 0.4s ease;
+        }
+        .project-row:hover { padding-left: 15px; padding-right: 15px; background: #09090b; }
+
+        /* ANIMATIONS */
+        .reveal-text { overflow: hidden; display: inline-block; vertical-align: bottom; }
+        .reveal-text span { display: inline-block; transform: translateY(100%); }
+
+        /* Hide Scrollbar */
         ::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body>
 
-    <!-- PERSISTENT EYES -->
-    <nav class="watcher-bar">
+    <!-- THE PERSISTENT WATCHER -->
+    <nav class="eye-header">
         <div class="eye"><div class="pupil"></div></div>
         <div class="eye"><div class="pupil"></div></div>
     </nav>
 
-    <main class="pt-24 px-6 md:px-12 max-w-6xl mx-auto">
+    <main class="pt-32 px-5 md:px-20 max-w-7xl mx-auto">
         
-        <!-- HERO -->
-        <section class="min-h-[70vh] flex flex-col justify-center">
-            <h1 class="text-[13vw] md:text-[8vw] font-bold leading-[0.9] tracking-tighter" id="title">
+        <!-- HERO SECTION (Mobile First) -->
+        <section class="min-h-[70vh] flex flex-col justify-center mb-20">
+            <p class="text-zinc-500 uppercase tracking-widest text-xs mb-6 stagger-hero">Full Stack Developer & Digital Strategist</p>
+            <h1 class="text-[14vw] md:text-[8vw] font-bold leading-[0.85] tracking-tighter mb-8 stagger-hero">
                 AMINE <br> <span class="text-zinc-800">CODEBYAD</span>
             </h1>
-            <p class="mt-6 text-zinc-400 text-lg md:text-2xl max-w-xl">
-                Full Stack Developer specializing in <span class="text-white">intelligent booking systems</span> and high-performance digital solutions.
+            <p class="text-zinc-400 text-lg md:text-2xl max-w-xl mb-10 leading-relaxed stagger-hero">
+                Specializing in <span class="text-white">intelligent booking systems</span> and high-performance digital solutions for beauty & wellness.
             </p>
-            <div class="mt-10">
-                <a href="https://wa.me/212713305570" class="bg-white text-black px-8 py-4 rounded-full font-bold hover:bg-zinc-200 transition">Let's Talk</a>
+            <div class="stagger-hero">
+                <a href="https://wa.me/212713305570" class="inline-block bg-white text-black px-10 py-5 rounded-full font-bold text-lg hover:scale-105 transition-transform active:scale-95">
+                    Start a Project
+                </a>
             </div>
         </section>
 
-        <!-- SERVICES -->
-        <section class="py-20 grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="bento-card md:col-span-2">
-                <h2 class="text-2xl font-bold mb-2">Custom Development</h2>
-                <p class="text-zinc-500">Building scalable web applications using the latest modern stacks.</p>
-            </div>
-            <div class="bento-card">
-                <h2 class="text-2xl font-bold mb-2">Booking</h2>
-                <p class="text-zinc-500">Specialized automation for service businesses.</p>
-            </div>
-        </section>
-
-        <!-- PROJECTS -->
-        <section class="py-10">
-            <h2 class="text-zinc-500 uppercase tracking-widest text-sm mb-10">Selected Works</h2>
-            <div class="flex flex-col border-t border-zinc-800">
-                <a href="https://tomespa.com" class="project-link border-b border-zinc-800 py-10 flex justify-between items-center">
-                    <h3 class="text-4xl md:text-6xl font-bold">TomeSpa</h3>
-                    <span class="text-zinc-500">2024</span>
-                </a>
-                <a href="https://becolor-rabat.com" class="project-link border-b border-zinc-800 py-10 flex justify-between items-center">
-                    <h3 class="text-4xl md:text-6xl font-bold">BeColor</h3>
-                    <span class="text-zinc-500">2024</span>
-                </a>
-                <div class="py-10 border-b border-zinc-800 flex justify-between items-center opacity-40">
-                    <h3 class="text-4xl md:text-6xl font-bold">Forma Pilates</h3>
-                    <span class="text-zinc-500">In Progress</span>
+        <!-- SPECIALTIES (Bento Grid) -->
+        <section class="py-20">
+            <h2 class="text-3xl font-bold mb-10 tracking-tight">Core Expertise</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Bento 1 -->
+                <div class="bento-card md:col-span-2">
+                    <span class="text-4xl mb-6 block">🌐</span>
+                    <h3 class="text-2xl font-bold mb-3">Custom Web Dev</h3>
+                    <p class="text-zinc-500">I build fast, responsive, and SEO-optimized platforms using Next.js and modern stacks.</p>
+                </div>
+                <!-- Bento 2 -->
+                <div class="bento-card">
+                    <span class="text-4xl mb-6 block">📅</span>
+                    <h3 class="text-2xl font-bold mb-3">Booking</h3>
+                    <p class="text-zinc-500">Intelligent reservation systems for salons and spas.</p>
+                </div>
+                <!-- Bento 3 -->
+                <div class="bento-card">
+                    <span class="text-4xl mb-6 block">🔍</span>
+                    <h3 class="text-2xl font-bold mb-3">SEO</h3>
+                    <p class="text-zinc-500">Optimizing for growth and visibility.</p>
+                </div>
+                <!-- Bento 4 -->
+                <div class="bento-card md:col-span-2 bg-zinc-100 text-black">
+                    <span class="text-4xl mb-6 block">⚡</span>
+                    <h3 class="text-2xl font-bold mb-3">Performance</h3>
+                    <p class="text-zinc-700 font-medium">Clean, maintainable code that grows with your business.</p>
                 </div>
             </div>
         </section>
 
-        <!-- FOOTER -->
-        <footer class="py-32 text-center">
-            <a href="https://wa.me/212713305570" class="text-4xl md:text-7xl font-bold tracking-tighter hover:opacity-50 transition">WHATSAPP →</a>
-            <div class="mt-20 text-zinc-600 text-sm flex justify-center gap-6">
-                <a href="https://instagram.com/codebyad_">Instagram</a>
-                <span>aminedkyar@gmail.com</span>
+        <!-- WORKS -->
+        <section class="py-20">
+            <h2 class="text-zinc-500 uppercase tracking-widest text-xs mb-10">Featured Work</h2>
+            <div class="flex flex-col border-t border-zinc-800">
+                <a href="https://tomespa.com" class="project-row group">
+                    <h3 class="text-4xl md:text-7xl font-bold group-hover:text-zinc-500">TomeSpa</h3>
+                    <div class="text-right">
+                        <p class="text-xs uppercase text-zinc-600">Wellness</p>
+                        <p class="text-xl">Visit site ↗</p>
+                    </div>
+                </a>
+                <a href="https://becolor-rabat.com" class="project-row group">
+                    <h3 class="text-4xl md:text-7xl font-bold group-hover:text-zinc-500">BeColor</h3>
+                    <div class="text-right">
+                        <p class="text-xs uppercase text-zinc-600">Beauty</p>
+                        <p class="text-xl">Visit site ↗</p>
+                    </div>
+                </a>
+                <div class="project-row opacity-30">
+                    <h3 class="text-4xl md:text-7xl font-bold">Forma Pilates</h3>
+                    <p class="text-zinc-600">Developing...</p>
+                </div>
             </div>
+        </section>
+
+        <!-- CONTACT -->
+        <footer class="py-40 text-center">
+            <h2 class="text-6xl md:text-[10vw] font-bold tracking-tighter mb-10">GET IN TOUCH.</h2>
+            <div class="flex flex-wrap justify-center gap-10 text-xl md:text-3xl font-medium">
+                <a href="https://wa.me/212713305570" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">WhatsApp</a>
+                <a href="mailto:aminedkyar@gmail.com" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">Email</a>
+                <a href="https://instagram.com/codebyad_" class="border-b-2 border-zinc-800 hover:border-white transition pb-2">Instagram</a>
+            </div>
+            <p class="mt-32 text-zinc-600 text-sm">© 2025 CODEBYAD. ALL RIGHTS RESERVED.</p>
         </footer>
+
     </main>
 
     <script>
-        // Smooth Scroll
+        // 1. Initialize Lenis (Smooth Scrolling)
         const lenis = new Lenis();
         function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
         requestAnimationFrame(raf);
 
-        // Eyes Follow
+        // 2. EYE TRACKING LOGIC
         window.addEventListener('mousemove', (e) => {
             const pupils = document.querySelectorAll('.pupil');
             pupils.forEach(pupil => {
                 const rect = pupil.parentElement.getBoundingClientRect();
-                const x = (e.clientX - rect.left) / rect.width * 100;
-                const y = (e.clientY - rect.top) / rect.height * 100;
-                gsap.to(pupil, { x: (x - 50) * 0.3, y: (y - 50) * 0.3, duration: 0.3 });
+                const eyeX = rect.left + rect.width / 2;
+                const eyeY = rect.top + rect.height / 2;
+                const angle = Math.atan2(e.clientY - eyeY, e.clientX - eyeX);
+                const distance = 8;
+                const x = Math.cos(angle) * distance;
+                const y = Math.sin(angle) * distance;
+                gsap.to(pupil, { x, y, duration: 0.1 });
             });
         });
 
-        // Animations
+        // Mobile Scroll Eye Tracking (Eyes look down as you scroll)
+        window.addEventListener('scroll', () => {
+            if (window.innerWidth < 768) {
+                const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
+                gsap.to(".pupil", { y: scrollPercent * 15, duration: 0.2 });
+            }
+        });
+
+        // 3. GSAP ANIMATIONS
         gsap.registerPlugin(ScrollTrigger);
-        gsap.from("#title", { y: 100, opacity: 0, duration: 1, ease: "power4.out" });
-        
-        gsap.from(".bento-card", {
-            scrollTrigger: { trigger: ".bento-card", start: "top 90%" },
-            y: 50, opacity: 0, stagger: 0.2, duration: 1
+
+        // Hero Entrance
+        gsap.from(".stagger-hero", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power4.out",
+            delay: 0.5
+        });
+
+        // Bento Cards Reveal
+        gsap.to(".bento-card", {
+            scrollTrigger: {
+                trigger: ".bento-card",
+                start: "top 85%"
+            },
+            opacity: 1,
+            y: 0,
+            duration: 1,
+            stagger: 0.15,
+            ease: "power3.out"
+        });
+
+        // Project Rows Reveal
+        const rows = document.querySelectorAll('.project-row');
+        rows.forEach(row => {
+            gsap.from(row, {
+                scrollTrigger: {
+                    trigger: row,
+                    start: "top 95%"
+                },
+                opacity: 0,
+                x: -30,
+                duration: 0.8
+            });
         });
     </script>
 </body>
